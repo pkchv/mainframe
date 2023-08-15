@@ -1,6 +1,6 @@
 import numpy as np
 
-from mainframe.server.api import MainframeAPI
+from mainframepy import MainframeAPI
 
 api = MainframeAPI()
 

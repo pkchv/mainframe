@@ -3,7 +3,7 @@ from functools import wraps
 from fastapi import FastAPI, Request, Response
 from loguru import logger
 
-from core.msgpack import pack, unpack
+from mainframepy.core.msgpack import pack, unpack
 
 
 class MainframeAPI(FastAPI):

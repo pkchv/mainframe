@@ -24,7 +24,7 @@ class NumpyEncoder(object):
         return buffer.getvalue()
 
     @staticmethod
-    def deserialize(serialized) -> np.ndarray:
+    def deserialize(serialized: bytes) -> np.ndarray:
         buffer = BytesIO(serialized)
         return np.load(buffer, allow_pickle=True)
 

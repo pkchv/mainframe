@@ -1,7 +1,7 @@
 import httpx
 
-from core.exceptions import ServerError
-from core.msgpack import pack, unpack
+from mainframepy.core.exceptions import ServerError
+from mainframepy.core.msgpack import pack, unpack
 
 
 def call(data: dict, host="localhost", port=8080, timeout=300):
