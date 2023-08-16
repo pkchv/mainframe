@@ -18,14 +18,11 @@ class MainframeAPI(FastAPI):
                 _content = await route(**request_data)
                 content = pack(_content)
                 return Response(content=content, media_type="application/x-msgpack")
-            except Exception as e:
-                try:
-                    logger.error(e, exc_info=True)
-                except Exception as _:
-                    logger.error(str(e))
+            except Exception as exc:
+                logger.exception("Exception in predict endpoint: {exc}", exc=str(exc))
 
                 return Response(
-                    content=pack({"$error": str(e)}),
+                    content=pack({"$error": str(exc)}),
                     media_type="application/x-msgpack",
                 )
 
