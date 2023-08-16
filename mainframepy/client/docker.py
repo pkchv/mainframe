@@ -4,7 +4,7 @@ from typing import Literal, Optional
 import docker
 from docker.models.containers import Container
 
-app_data_directory = os.path.realpath("~/.app-data")
+data_directory = os.path.realpath("~/.mainframe")
 
 
 def create_container(
@@ -21,7 +21,7 @@ def create_container(
         device_requests=[
             docker.types.DeviceRequest(device_ids=["0"], capabilities=[["gpu"]])
         ],
-        volumes=_create_volume_binds(app_data_directory, image_id, volumes),
+        volumes=_create_volume_binds(data_directory, image_id, volumes),
     )
 
     container.reload()
@@ -30,20 +30,20 @@ def create_container(
 
 
 def _create_volume_binds(
-    app_data_directory: str,
+    data_directory: str,
     image_id: str,
     volumes: Optional[list[(Literal["config", "models", "outputs"], str)]] = None,
 ):
     _volumes = {
-        os.path.join(app_data_directory, image_id, "config"): {
+        os.path.join(data_directory, image_id, "config"): {
             "bind": "/config",
             "mode": "ro",
         },
-        os.path.join(app_data_directory, image_id, "models"): {
+        os.path.join(data_directory, image_id, "models"): {
             "bind": "/models",
             "mode": "rw",
         },
-        os.path.join(app_data_directory, image_id, "outputs"): {
+        os.path.join(data_directory, image_id, "outputs"): {
             "bind": "/outputs",
             "mode": "rw",
         },
@@ -51,7 +51,7 @@ def _create_volume_binds(
 
     if volumes is not None:
         for volume in volumes:
-            _volumes[os.path.join(app_data_directory, image_id, volume[0])] = {
+            _volumes[os.path.join(data_directory, image_id, volume[0])] = {
                 "bind": volume[1],
                 "mode": "rw",
             }
